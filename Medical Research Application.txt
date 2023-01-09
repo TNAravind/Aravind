@@ -1,0 +1,23 @@
+PROGRAM STRUCTURE
+
+1.I have considered a class Disease and set few properties in them
+2.I have used enum to set custom datatypes in the program
+3.I have used 'DoctorApp' as a class to perform all the functions such as 'Adding New Disease', 'Adding new symptoms', 'Checking Patients'.
+4.I have considered 'HelperFunctions' class to use switch case statements to perform various cases as the user enters his requirements.
+5.I have taken 'UIMenu' as my main class which calls a start() function, and the program executes.
+
+PROCEDURE
+
+1. We can use ArrayList instead of Array since we do not know how many diseases the user is going to enter.
+2. We can store all the inputs required for Case:1 by using and calling a respective function.
+3. We then move to Case:2 where we first ask the disease for which the user wants to add symptoms for, and we will check if that disease
+is already present in the ArrayList we created in Case:1. If the disease is not present then we ask the user to first register the 
+disease and then add the symptoms for the same.
+4. Then in Case:3 only when the symptoms entered match with the symptoms entered in Case:2 then all the diseases with matching symptoms will 
+be displayed in the console.
+
+INBUILT CLASSES USED
+1. ENUM
+2. ArrayList
+3. Try Catch
+4. All other basic predefined classes and methods.
