@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Favorite Books</title>
+    <script src="./FavBook.js"></script>
+    <Style>
+        body{
+            margin: 0px;
+            padding: 60px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f031c8106269265.631f2211ea7f4.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: orangered;
+        }
+        input{
+            color: green;
+            border: 5px dotted greenyellow;
+            
+        }
+        button{
+            color: white;
+            background-color: blue;
+        }
+    </Style>
+</head>
+<body>
+        <div id="favBookContainer">
+            <h2>Fav Books</h2>
+            <p> Enter your Favourate Book </p>
+            <input type="text" id="favBook">
+            <button onclick="getData()">Add book</button>
+        </div>
+    <ul id="favBooks"></ul>
+</body>
+</html>
