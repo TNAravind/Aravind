@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script src="./CurrencyConverterApp.js"></script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 60px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            background-image: url("https://p4.wallpaperbetter.com/wallpaper/752/642/339/background-money-bills-dollars-wallpaper-preview.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+        }
+        input{
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        option{
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        button{
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+        
+    </style>
+</head>
+    <body>
+        <div> 
+        <h1> CURRENY CONVERTER </h1>
+        <select id="country1">
+            <option>India</option>
+            <option>USA</option>
+            
+            <option>UK</option>
+            <option>Russia</option>
+        </select>
+        
+            <input id="txtvalue" type="number" placeholder="enter the amount">
+            <select id="country2">
+                <option>India</option>
+                <option>USA</option>
+                
+                <option>UK</option>
+                <option>Russia</option>
+            </select>
+            <button  onclick="converter()">convert</button> <br>
+                <span id="result"> Result =</span>
+        </div>
+    </body>
+</html>
