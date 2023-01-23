@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./CalculatorNewApp.js"></script>
+    <script src="./jquerylib.min.js"></script>
+    <style>
+        a{
+            text-decoration: none;
+            justify-content:space-evenly;
+        }
+        *{
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        .b{
+            background-color: rgb(0, 137, 121);
+            color: rgb(255, 123, 0);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: medium;
+        }
+        #finalTable{    
+            background-color: rgb(0, 137, 121);
+            color: rgb(255, 255, 255);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: medium;
+        }
+        
+        .t{
+            font-size: 30px;
+            background-color:greenyellow;
+        }
+        .h{
+            background-color: rgb(255, 123, 0);
+            color: rgb(255, 255, 255);
+        }
+        .sbx{
+            border: 1px solid rgb(0, 69, 0);
+            background-color: white;
+            color: rgb(0,69,0);
+            padding: 5px 15px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.354);
+            margin-right: 50px;
+            transition: 0.5s;
+            
+        }
+        .sbx:hover{
+            background-color: rgb(255, 81, 0);
+            color: white;
+        }
+    </style>
+    <script>
+        $().ready(start)
+        function start(){
+            $("#historyPage").hide();
+            $("#calculatorPage").fadeIn(1000);       
+        }
+        function ac(){
+            document.getElementById("result").value="";
+        }
+        function show(input){
+            document.getElementById("result").value+=input;
+        }   
+        function calc(){
+            const operation = (document.getElementById("result").value);
+            const output=eval(document.getElementById("result").value);
+            document.getElementById("result").value=output;
+            localStorage.setItem(operation,output);
+            obj.addData(new CalculaterApp(operation,output));
+            //console.table(obj.calArray);
+
+        }
+        function sqroot(){
+            var operation = (document.getElementById("result").value);
+            var input = document.getElementById("result").value;
+            var output = Math.sqrt(input)
+            document.getElementById("result").value=output;
+            localStorage.setItem(operation,output);
+            obj.addData(new CalculaterApp(operation,output));
+            //console.table(obj.calArray);
+        }
+        function sqr(){
+            var operation = (document.getElementById("result").value);
+            var input = document.getElementById("result").value;
+            var output = Math.pow(input,2);
+            document.getElementById("result").value=output;
+            localStorage.setItem(operation,output);
+            obj.addData(new CalculaterApp(operation,output));
+            //console.table(obj.calArray);
+        }
+
+        function calculator(){
+            $("#historyPage").hide(0);
+            $("#calculatorPage").fadeIn(1000);         
+        }
+        function history(){
+            $("#calculatorPage").hide(0);
+            $("#historyPage").fadeIn(1000);
+            const allData = obj.getData();
+            console.table(allData);
+            populate(allData);
+        }
+        function populate(allData){
+            $("#finalTable").find("tr:gt(0)").remove();
+            $.each(allData, (index, item) => {
+                const row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.operations}</td>
+                    <td>${item.results}</td>                                    
+                    </tr>`
+                $("#finalTable").append(row);
+            })
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <nav>
+            <a class="sbx" id="displayCalculator" href="#" onclick="calculator()">Calculator</a>
+            <a class="sbx" id="displayHistory" href="#" onclick="history()">History</a>
+        </nav>
+    </center>
+    <center>
+<section id="calculatorPage">
+<table border="1">
+<caption><h1 class="h">Simple Calculator App</h1></caption>  
+    <tr>
+        <td colspan="3" align="center"; ><input type="text" class="t" id="result"></td>
+        <td align="center"><button class="b" onclick="ac()">AC</button></td>
+        <td align="center"><button  class="b" onclick="calc()">=</button></td>
+    </tr>
+    <tr>
+        <td align="center"><button class="b" onclick="show('1')">1</button></td>    
+        <td align="center"><button class="b" onclick="show('2')">2</button></td>
+        <td align="center"><button class="b" onclick="show('3')">3</button></td>
+        <td colspan="2" align="center"><button class="b" onclick="show('+')">+</button></td>
+    </tr>
+    <tr>
+        <td align="center"><button class="b" onclick="show('4')">4</button></td>
+        <td align="center"><button class="b" onclick="show('5')">5</button></td>
+        <td align="center"><button class="b" onclick="show('6')">6</button></td>
+        <td colspan="2" align="center"><button class="b" onclick="show('-')">-</button></td>
+    </tr>
+    <tr>
+        <td align="center"><button class="b" onclick="show('7')">7</button></td>
+        <td align="center"><button class="b" onclick="show('8')">8</button></td>
+        <td align="center"><button class="b" onclick="show('9')">9</button></td>
+        <td colspan="2" align="center"><button class="b" onclick="show('*')">*</button></td>
+    </tr>
+    <tr>
+        <td align="center"><button class="b" onclick="show('0')">0</button></td>
+        <td align="center"><button class="b" onclick="sqroot()">SQRT</button></td>
+        <td align="center"><button class="b" onclick="sqr()">SQR</button></td>
+        <td colspan="2" align="center"><button class="b" onclick="show('/')">/</button></td>
+    </tr>
+</table>
+    </section>
+    </center>
+    <section id="historyPage">
+        <center>
+        <div>
+            <h1>History</h1>
+            <table id="finalTable" border="2px" cellpadding="5px" cellspacing="5px">
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Operations</th>
+                    <th>Results</th>
+                    </tr>
+            </table>
+        </div>
+    </center>
+    </section>
+</body>
+</html>
