@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TollPlaza</title>
+
+    <style>
+        body{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size:x-large;
+            /* background-image: url("https://fastag.ihmcl.com/img/Login/Login_BG/hero-area.png"); */
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: blue;
+            background-color: lightsalmon;
+        }
+        div{
+            padding: 10px;
+        }
+        table{
+            background-color: white;
+        }
+        button{
+            color: greenyellow;
+            background-color: green;
+            border-radius: 35px;
+        }
+        input{
+            width: 12%;
+            color: greenyellow;
+            background-color: green;
+            border-radius: 40px;
+        }
+        select{
+            width: 12%;
+            color: greenyellow;
+            background-color: green;
+            border-radius: 35px;
+        }
+    </style>
+
+
+    <script src="./TollPlaza.js"></script>
+    <script src="./jquery-3.6.2.min.js"></script>
+
+    <script>
+        vehicleList = { CAR : 170, BUS : 200, BIKE : 100, TRUCK : 300 }
+        $().ready(start);
+
+        function start(){
+            $("table").hide()
+            $("#sel").change(onChange);
+            $("#onSave").click(onClick);
+            $("#maru").click(onDetail);
+            $("#addbutton").click(addDetail);
+            $("#onAddNew").click(onAddNew);
+            $(".hide").hide()
+            
+        }
+
+        function onAddNew(){
+            $(".hide").show(1000);
+        }
+        function onChange(){
+            const data = $("#sel").val();
+            // console.log(data)
+            $("#deftype").val(data);
+            // $("#defAMT").val(vehicleList.keys());
+            $("#defAMT").val(vehicleList[data]);
+            console.log(vehicleList[data])
+            }
+            
+            // switch(data){
+            //     case "CAR": $("#defAMT").val(CAR);
+            //     break;
+            //     case "BUS": $("#defAMT").val(BUS);
+            //     break;
+            //     case "BIKE": $("#defAMT").val(BIKE);
+            //     break;
+            //     case "TRUCK": $("#defAMT").val(TRUCK);
+            //     break;
+            // }
+        // }
+        function onClick(){
+            const type = $("#deftype").val()
+            const amount = $("#defAMT").val()
+            const num = $("#vNum").val()
+            const date = $("#vdate").val()
+            // console.log(type,amount,date,num)
+            obj.addData(new TollPlaza(type, amount,num, date))
+            // console.log(obj.storeData);
+            clearr()
+        }
+        function clearr(){
+            $("#deftype").val("")
+            $("#defAMT").val("")
+            $("#vNum").val("")
+            $("#vdate").val("")
+            $("#add").val("")
+            $("#addFee").val("")
+            $("#sel").val("div:eq(1)>select>option")
+        }
+        function onDetail(){
+            $("table").show()
+            const fetch = obj.getAllData();
+            // console.log(fetch)
+            populate(fetch);
+        }
+        function populate(data){
+            $("#repotable").find("tr:gt(0)").remove();   
+            $.each(data,(index,item)=>{
+                const detailrow = `<tr>
+                    <td>${item.vType}</td>
+                    <td>${item.vAmount}</td>
+                    <td>${item.vNum}</td>
+                    <td>${item.vDate}</td>
+                    </tr>`
+                    $("table").append(detailrow);
+            })
+        }
+        
+        function addDetail(){
+            const newvehicle = ($("#add").val()).toUpperCase();
+            const newFee = $("#addFee").val();
+            for(let ex in vehicleList){
+                if(newvehicle == ex){
+                    alert("jshdjsdhjshdjhsd")
+                }
+            }
+            if(newvehicle == ""){
+                $("#add").val("")
+                $("#addFee").val("")
+                // alert("sdhsjhsjd\d")
+            }
+            else{
+                $("#add").val("")
+                $("#addFee").val("")
+            vehicleList[newvehicle] = parseInt(newFee);
+            // console.log(vehicleList);
+            const option = `<option value="${newvehicle}"> ${newvehicle} </option>)`
+            $("#sel").append(option)
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <center>
+        <h2 style="margin-top: 55px;" >TOLL PLAZA</h2>
+    <div>
+        Select Type : <select id="sel">
+            <option value="DEFAULT">Select Type</option>
+            <option value="CAR">CAR</option>
+            <option value="BIKE">BIKE</option>
+            <option value="BUS">BUS</option>
+            <option value="TRUCK">TRUCK</option>
+        </select> <br>
+        Vehicle Type : <input style="border: 2px;" type="text" disabled id="deftype" > <br>
+        Vehicle Amount : <input style="border: 2px;" type="text" disabled id="defAMT"> <br>
+        Vehicle Number : <input type="text" id="vNum" > <br>
+        Date : <input type="date" id="vdate" > <br>
+        <button id="onSave" >Save Details</button>
+        
+    </div>
+    <div class="hide">
+        Add new vehicle : <input type="text" id="add" > <br>
+        Add Vehicle fee : <input type="number" id="addFee" > <br>
+        <button id="addbutton" >Add to list</button>
+    </div>
+    <div>
+        <button id="onAddNew" > Register New Vehicle </button>
+    </div>
+    <div>
+        <button id="maru" >Get report</button>
+        
+        <table border="1" id="repotable">
+            <th>Vehicle Type</th>
+            <th>Amount</th>
+            <th>Number</th>
+            <th>Date</th>
+        </table>
+    </div>
+    
+</center>
+</body>
+</html>
