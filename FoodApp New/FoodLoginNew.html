@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquerylib.min.js"></script>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serifz;
+            padding: 10px;
+            background-color: rgb(255, 223, 208);
+        }
+        #first{
+            background-color: lightsalmon;
+            color: orangered; 
+        }
+        a{
+            text-decoration: none;
+        }
+        .sbx{
+            border: 1px solid rgb(0, 69, 0);
+            background-color: white;
+            color: orangered;
+            padding: 5px 15px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.354);
+            margin-right: 50px;
+            transition: 0.5s;
+        }
+        .sbx:hover{
+            background-color: rgb(255, 81, 0);
+            color: white;
+        }
+    </style>
+    <script>
+        $().ready(startwelcome);
+        function startwelcome() {
+            $("#regDiv").hide();
+            $("#Regid").click(regesterForm);
+            $("#logId").click(loginForm)
+            $("#regButton").click(saveRegister)
+            $("#regCancel").click(cancelReg)
+            $("#saveLogin").click(loginpage)
+        }
+        function loginForm() {
+            $("#regDiv").hide();
+            $("#logDiv").show();
+        }
+        function regesterForm() {
+            $("#logDiv").hide();
+            $("#regDiv").show();
+        }
+        function saveRegister() {
+            const phone = $("#regPhone").val();
+            const password = $("#regPass").val();
+
+            localStorage.setItem(phone, password);
+            $("#pDisplay").show()
+            document.querySelector("#pDisplay").innerHTML = "<b> Registered Successfully </b>"
+            $("#pDisplay").show(3000)
+            $("#regPhone").val('');
+            $("#regPass").val('');
+        }
+        function cancelReg() {
+            $("#regPhone").val('');
+            $("#regPass").val('');
+            $("#pDisplay").show()
+            document.querySelector("#pDisplay").innerHTML = "<b> Registration Cancelled</b>"
+            $("#pDisplay").show(3000)
+        }
+        function loginpage() {
+            const phone = $("#logPhone").val();
+            const password = $("#logPass").val();
+
+            // console.log(phone)
+            // console.log(localStorage.getItem(phone))
+            // console.log(localStorage.getItem(`${phone}`))
+
+            if(password == localStorage.getItem(phone)) {
+                $("#logPhone").val("");
+                $("#logPass").val("");
+                $("#pDisplay").show()
+                document.querySelector("#pDisplay").innerHTML = "<b> Login Successfull </b>"
+                $("#pDisplay").show(3000)
+                window.location.href="FoodAppNew.html";
+            }
+            else {
+                $("#logPhone").val("");
+                $("#logPass").val("");
+                $("#pDisplay").show()
+                document.querySelector("#pDisplay").innerHTML = "<b> The Username or Password is Wrong..! New User? Please Register</b>"
+                $("#pDisplay").show(3000)
+            }
+
+            //    const phone1 = localStorage.getItem(phone);
+            //    console.log(localStorage.getItem(phone))
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+    <div id="first">
+    <center>
+            <h1>WELCOME TO FOOD ORDERING APP</h1>
+    </center>
+    </div>
+    <div>
+    <center>
+        <br><br><br>
+        <div id="logDiv">
+            <h2>Login Page</h2>
+            <br>
+            <table>
+                <tr>
+                    <td>Phone or Email</td>
+                    <td><input type="text" id="logPhone"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="logPass"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="sbx" id="saveLogin">Login</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>New User? : <a class="sbx" href="#" id="Regid">Register</a></td>
+                </tr>
+            </table>
+        </div>
+        <div id="regDiv">
+            <h2>Register Page</h2>
+            <table>
+                <tr>
+                    <td>Phone or Email</td>
+                    <td><input type="text" id="regPhone"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="regPass"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="sbx" id="regButton">Register</button> <button class="sbx" id="regCancel">Cancel</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Already User? : <a class="sbx" href="#" id="logId">Login</a></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <p id="pDisplay"></p>
+    </center>
+</div>
+</body>
+
+</html>

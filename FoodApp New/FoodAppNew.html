@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./FoodAppNew.js"></script>
+    <script src="./jquerylib.min.js"></script>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serifz;
+            padding: 10px;
+            background-color: rgb(255, 223, 208);
+        }
+        #first{
+            background-color: lightsalmon;
+            color: orangered;
+        }
+        a{
+            text-decoration: none;
+        }
+        .sbx{
+            border: 1px solid rgb(0, 69, 0);
+            background-color: white;
+            color: orangered;
+            padding: 5px 15px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.354);
+            margin-right: 50px;
+            transition: 0.5s;
+        }
+        .sbx:hover{
+            background-color: rgb(255, 81, 0);
+            color: white;
+        }
+        table{
+            background-color: rgb(255, 223, 208);
+            color: rgb(255, 81, 0);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: medium;
+            border-color: orangered;
+        }
+    </style>
+    <script>
+        let bill = 0;
+        $().ready(Start)
+        function Start(){
+            var bill = 0;
+            $("#cartTable").hide();
+            $("#cartLink").click(showCartTable);
+            $(".addToCart").click(addToCart);
+            $("#menuLink").click(showMenu);
+        }
+
+        function showMenu(){
+            $("#cartTable").hide(1000);
+            $("#fullMenu").show(1000);            
+        }
+
+        function showCartTable(){
+            $("#fullMenu").hide(1000);
+            $("#cartTable").show(1000);
+            const data = obj.getfood();
+            //console.table(data);
+            populate(data)
+        }
+
+        function populate(data){
+            $("table").find("tr:gt(0)").remove();
+            $.each(data, (index, item) => {
+                const row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.item}</td>
+                    <td>${item.rate}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.total}</td>                    
+                    </tr>`
+                $("#finalTable").append(row);
+            })
+        }
+
+        function addToCart(){
+            const item = $(this).parents("div").find(".itemName").text();
+            const rate = $(this).parents("pre").find("h3:eq(1)").text();
+            const quantity = parseInt($(this).parents("pre").find(".quantity").val()); 
+            console.log(rate,quantity);
+            const total = quantity*rate;
+            let finalbill = billFunction(total);
+            console.log(finalbill);            
+            $("#pDisplay").text("The total bill is: " + finalbill);
+            //console.log(total);
+            obj.addfood(new FoodApp(item, rate, quantity, total));
+            console.table(obj.foodArray);
+        }
+
+        function billFunction(data){            
+            bill = bill+data;
+            return bill;
+        }
+
+    </script>
+</head>
+<body>
+    <div id="first" >
+    <center>
+        <h1>WELCOME TO FOOD ORDERING APP</h1>
+    </center>
+    </div>
+    <nav>
+        <center>
+        <div id="cartDiv" ><a class="sbx" id="cartLink" href="#">Go to Cart</a><a class="sbx" id="menuLink" href="#">Go to Menu</a></div>
+        </center>
+    </nav>
+    <br><br>
+    <section id="fullMenu" style="display:flex; justify-content: space-between;">
+        <div id="firstItem">
+            <img height="200px" width="200px" id="firstImage" src="https://freshprotino.com/wp-content/uploads/2021/07/Best-Mutton-Biryani-Recipe-1.jpg" alt="">
+            <h2 class="itemName">Paradise Biriyani</h2>
+            <h3>Location : </h3><pre><h3>Price in Rs.</h3><h3>300</h3> Quantity: <select class="quantity">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option></select><button class="addToCart" >Add to Cart</button>
+            </pre>
+        </div>
+        <div id="secondItem">
+            <img height="200px" width="200px" id="secondImage" src="https://sp-ao.shortpixel.ai/client/q_lqip,ret_wait,w_240,h_240/https://www.thetakeiteasychef.com/wp-content/uploads/2016/12/unpaid-review-easterns-kebab-masala.1024x1024-3.png" alt="">
+            <h2 class="itemName">Kebab</h2>
+            <h3>Location : </h3><pre><h3>Price in Rs.</h3><h3>200</h3> Quantity: <select class="quantity">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option></select><button class="addToCart" >Add to Cart</button>
+            </pre>
+        </div>        
+        <div id="thirdItem">
+            <img height="200px" width="200px" id="thirdImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf4ytuYPthaCQN1lGL6gkHw254tGSDIx8dBQ&usqp=CAU" alt="">
+            <h2 class="itemName">Shawarma Roll</h2>
+            <h3>Location : </h3><pre><h3>Price in Rs.</h3><h3>250</h3> Quantity: <select class="quantity">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option></select><button class="addToCart" >Add to Cart</button>
+            </pre>
+        </div>
+        <div id="fourthItem">
+            <img height="200px" width="200px" id="fourthImage" src="https://www.licious.in/blog/wp-content/uploads/2020/12/Lemon-Chicken.jpg" alt="">
+            <h2 class="itemName">Lemon Chicken</h2>
+            <h3>Location : </h3><pre><h3>Price in Rs.</h3><h3>150</h3> Quantity: <select class="quantity">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option></select><button class="addToCart" >Add to Cart</button>
+            </pre>
+        </div>        
+    </section>
+    <section id="cartTable">
+        <center>
+        <div>
+            <h1>CARD</h1>
+            <table border="2px" id="finalTable">
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Item</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                </tr>
+            </table>
+            <h2 id="pDisplay"></h2>
+        </div>
+        </center>
+    </section>
+</body>
+</html>
