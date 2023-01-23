@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 3px;
+        }
+        body{
+            background-color: lemonchiffon;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 30px;
+        }
+        a{
+            text-decoration: none;
+            border: 3px dashed rgb(247, 82, 82) ;
+        }
+        input{
+            background-color:rgb(248, 193, 193);
+            color: rgb(47, 168, 255);
+        }
+        button{
+            color: rgb(248, 193, 193);
+            background-color: rgb(47, 168, 255);
+        }
+        h1{
+           color: rgb(47, 168, 255);
+        }
+        h2{
+            color: rgb(247, 82, 82);
+        }
+        
+
+        
+    </style>
+</head>
+<script src="./ProductManager.js"></script>
+<script>
+    
+  const data = instance.getAllProducts()
+    function createRow(product)
+    {
+        let newRow = document.createElement("tr")
+        newRow.innerHTML = `<td> ${product.id} </td>
+        <td> ${product.name} </td>
+        <td> ${product.details} </td>
+        <td> ${product.price} </td>
+        `
+        return newRow;
+    }
+             function populate(){
+                const table = document.querySelector("#tblData");     
+                const firstRow = document.querySelector("#tblheading");
+                table.innerHTML = "";
+                table.appendChild(firstRow);
+                for(const item of data){
+                    let row = createRow(item);
+                    table.appendChild(row);
+                }
+            }
+            window.addEventListener("load",function()
+            {
+                populate();
+            })
+            function onClickEdit() {
+                const id = prompt("Enter the Id of the Employee to Edit");
+                try{
+                    const foundRec = instance.getProducts(id);
+                    document.getElementById("txtOldId").value = foundRec.id;    
+                    document.getElementById("txtOldName").value = foundRec.name;    
+                    document.getElementById("txtOldDetails").value = foundRec.details;    
+                    document.getElementById("txtOldPrice").value = foundRec.price;
+                }catch(ex){
+                    alert(ex);
+                }    
+            }
+            function onClickSearch()
+            {
+                const id = document.getElementById("txtSearch").value;
+                try
+                {
+                    const foundRec = instance.getProducts(id)    
+                    const name =(document.getElementById("txtOldName").value = foundRec.name);    
+                    const details=(document.getElementById("txtOldDetails").value = foundRec.details);    
+                    const price = (document.getElementById("txtOldPrice").value = foundRec.price);
+                    document.getElementById("output").innerText = `This Product with ID: ${id} is ${name} and it is ${details}. The price of the product is Rs.${price}`
+                }
+                catch(ex){
+                    alert(ex);
+                }    
+            }
+            function onUpdate() {
+                const id = parseInt(document.getElementById("txtOldId").value);
+                const name = document.getElementById("txtOldName").value;
+                const details = document.getElementById("txtOldDetails").value;
+                const price = parseFloat(document.getElementById("txtOldPrice").value);
+
+                const product = new Product(id, name, details, price);
+                try {
+                    instance.updateProducts(product);
+                    populate();
+                } catch (error) {
+                    alert(error)
+                }
+            }
+            
+            function onClickAdd() {
+                const id = parseInt(document.getElementById("txtId").value);
+                const name = document.getElementById("txtName").value;
+                const details = document.getElementById("txtDetails").value;
+                const price = parseFloat(document.getElementById("txtPrice").value);
+                localStorage.setItem(id,name)
+                const product = new Product(id, name, details, price);
+                try {
+                    instance.addProducts(product);
+                    populate();
+                } catch (error) {
+                    alert(error)
+                }
+            }
+
+
+</script>
+<body>
+    <h1>Product Manager App</h1>
+    <nav>
+        <a href="#">Display All Products</a>
+        <a href="#" onclick="onClickEdit()">Update Products</a>
+    </nav>
+    <div>
+        
+            <p style="float: right;">
+                <input type="text" id="txtSearch" placeholder="Search by ID">
+                <button onclick="onClickSearch()">Search</button>
+            </p>
+        
+        <p id="output"></p>
+    </div>
+    <div style="margin-top: -30px;" >
+        <h2>Products Table</h2>
+        
+        <table border="1" id="tblData">
+            <tr id="tblheading">
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Details</th>
+                <th>Price</th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2>Add Product</h2>
+        <p>Product ID : <input type="number" id="txtId"></p>
+        <p>Product Name : <input type="text" id="txtName"></p>
+        <p>Product Details : <input type="text" id="txtDetails"> </p>
+        <p>Product Price : <input type="number" id="txtPrice"> </p>
+        <button onclick="onClickAdd()">Add Product</button>
+    </div>
+    <div>
+        <h2>Update Product</h2>
+        <p>Product Id : <input type="number" disabled id="txtOldId"></p>
+        <p>Product Name : <input type="text" id="txtOldName"></p>
+        <p>Product Details : <input type="text" id="txtOldDetails"> </p>
+        <p>Product Price : <input type="number" id="txtOldPrice"> </p>
+        <button onclick="onUpdate()">Update Product</button>
+    </div>
+</body>
+</html>                
